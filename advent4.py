@@ -1,16 +1,33 @@
 f = open('input_4.txt', 'r')
-#for line in f:
-#    print line
+sample_input = ['bbb-aaaaa-z-y-x-123[abxyz]', 'a-b-c-d-e-f-g-h-987[abcde]', 'not-a-real-room-404[oarel]', 'totally-real-room-200[decoy]']
+sumofIds = 0
 
-sample_input = ['aaaaa-bbb-z-y-x-123[abxyz]', 'a-b-c-d-e-f-g-h-987[abcde]', 'not-a-real-room-404[oarel]', 'totally-real-room-200[decoy]']
-
-for line in sample_input:
-    print "line: ", line
-    line = line.replace('-', '')
-    print "line: ", line
+for line in f:
+    useBlock = ""
+    useLetters = []
     for block in line.split('-'):
-        print block
+        for letter in list(useBlock):
+            useLetters.append(letter)
+        useBlock = block
+
     ID = block.split('[')[0]
     checkSum = block.split('[')[1].replace(']', '')
-    print "ID: ", ID
-    print "checkSum: ", checkSum
+
+    orderedLetters = []
+    for letter in useLetters:
+        addedLetterAlready = (letter, useLetters.count(letter)) in orderedLetters
+        if addedLetterAlready != True:
+            orderedLetters.append((letter, useLetters.count(letter)))
+
+    sortedAlphabetically = sorted(orderedLetters)
+    sortedAlphabetically.sort(key=lambda x: x[1], reverse=True)
+    sortedLetters = ""
+    for sortedLetter in sortedAlphabetically:
+        sortedLetters += sortedLetter[0]
+    sortedLetters = sortedLetters[:5]
+    checkSum = checkSum[:5]
+
+    if sortedLetters == checkSum:
+        sumofIds = sumofIds + int(ID)
+
+print "Sum of Sectors ID's", sumofIds
