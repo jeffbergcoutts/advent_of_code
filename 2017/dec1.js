@@ -1,5 +1,5 @@
 var fs = require('fs')
-var file = '/Users/bergcoutts/Projects/advent_of_code_2017/input_dec1.txt'
+var file = '/Users/bergcoutts/Projects/advent_of_code/2017/input_dec1.txt'
 var contents = undefined
 var number = ""
 
